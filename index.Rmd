@@ -2,33 +2,41 @@
 title: "Thomaz F. S. Bastiaanssen"
 image: "thomaz.jpg"
 links:
-  - label: LinkedIn
-    url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
+
   - label: Twitter
     url: "https://twitter.com/Thomazsan"
   - label: GitHub
     url: "https://github.com/thomazbastiaanssen"
   - label: Email
     url: "mailto:thomaz.bastiaanssen@ucc.ie"
+  - label: Publications
+    url: "https://scholar.google.com/citations?user=QktcRXUAAAAJ&hl=en"
+  - label: CV
+    url: "https://thomazbastiaanssen.github.io/cv/tfs_cv.pdf"
+  - label: LinkedIn
+    url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
+    
 output:
   postcards::trestles
 ---
  
 ## Bio
 
-Thomaz Bastiaanssen is originally from the Netherlands where he studied Biology at the University of Utrecht. He moved to Ireland to start a PhD in bioinformatics under the supervision of Prof. John Cryan, Prof. Ted Dinan and Dr. Marcus Claesson. The topic of his thesis was the microbiome-gut-brain axis. Specifically, the focus was to understand what measurable aspects of the microbiome-gut-brain axis are the most informative to study in the context of health and disease. After graduating in 2021, Thomaz continues to work as a post-doc and the lead bioinformatician in Prof. Cryans lab. He is particularly interested in studying the temporal dynamics of the microbiome and understanding the microbiome from an ecosystem perspective.
+I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health. 
+The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. As a bioinformatician, I value clear and easily interpretable analysis of complex data in order to promote interdisciplinary collaboration.
+I'm currently working as a post-doc and the lead bioinformatician in Prof. Cryans lab. 
 
 ## Education
 
 **University College Cork** | Ireland
 
-PhD in Bioinformatics | January 2018 - March 2021
+PhD in Bioinformatics | 2018 - 2021
 
 **Utrecht University** | Netherlands
 
-MSs in Molecular and Cellular Life Sciences
+MSc in Molecular and Cellular Life Sciences | 2014 - 2017
 
-B.S. in Biology 
+BSc in Biology | 2010 - 2013 
 
 ## Experience
 

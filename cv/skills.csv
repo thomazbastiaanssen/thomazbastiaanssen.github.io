@@ -1,0 +1,20 @@
+group,skill
+General programming,R
+General programming,tidyverse
+General programming,R package development
+General programming,Python
+General programming,Bash
+General programming,Server management
+bioinformatics,16S analysis
+bioinformatics,Whole genome shotgun analysis
+bioinformatics,RNAseq analysis
+bioinformatics,Metabolomics analysis
+bioinformatics,Microbiome functional inference
+bioinformatics,Volatility analysis
+bioinformatics,Multi-omics integration
+statistics,Experimental design
+statistics,Data analysis
+statistics,Generalised linear models
+statistics,Generalised linear mixed effects models
+statistics,Principal component analysis
+statistics,Compositional data analysis

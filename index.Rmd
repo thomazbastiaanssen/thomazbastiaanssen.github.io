@@ -2,7 +2,6 @@
 title: "Thomaz F. S. Bastiaanssen"
 image: "thomaz.jpg"
 links:
-
   - label: Twitter
     url: "https://twitter.com/Thomazsan"
   - label: GitHub
@@ -19,25 +18,40 @@ links:
 output:
   postcards::trestles
 ---
+<style>
+body {text-align: justify}
+</style>
  
-## Bio
+## About
 
 I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health. 
-The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. As a bioinformatician, I value clear and easily interpretable analysis of complex data in order to promote interdisciplinary collaboration.
+
+The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. 
+
+As a bioinformatician, I value clear and easily interpretable analysis of complex data in order to promote interdisciplinary collaboration.
 I'm currently working as a post-doc and the lead bioinformatician in Prof. Cryans lab. 
 
 ## Education
 
-**University College Cork** | Ireland
+**University College Cork** | Cork, Ireland
 
-PhD in Bioinformatics | 2018 - 2021
+PhD | 2018 - 2021
 
-**Utrecht University** | Netherlands
+* Supervision of Prof. John F. Cryan, Prof. Timothy G. Dinan and Dr. Marcus J. Claesson
 
-MSc in Molecular and Cellular Life Sciences | 2014 - 2017
+**Utrecht University** | Utrecht, Netherlands
 
-BSc in Biology | 2010 - 2013 
+MSc | 2014 - 2017
+
+* Research Trajectory: Molecular and Cellular Life Sciences - Bioinformatics
+
+BSc | 2010 - 2013 
+
+* Majored in Biology with a Minor in Art History
 
 ## Experience
 
-**APC Microbiome Ireland** | Postdoctoral Researcher | Lead Bioinformatician | March 2021 - Present
+**APC Microbiome Ireland** | Cork, Ireland
+Postdoctoral Researcher | March 2021 - Present
+
+* Lead Bioinformatician

@@ -1,0 +1,35 @@
+---
+title: "Thomaz F. S. Bastiaanssen"
+image: "thomaz.jpg"
+links:
+  - label: LinkedIn
+    url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
+  - label: Twitter
+    url: "https://twitter.com/Thomazsan"
+  - label: GitHub
+    url: "https://github.com/thomazbastiaanssen"
+  - label: Email
+    url: "mailto:thomaz.bastiaanssen@ucc.ie"
+output:
+  postcards::trestles
+---
+ 
+## Bio
+
+Thomaz Bastiaanssen is originally from the Netherlands where he studied Biology at the University of Utrecht. He moved to Ireland to start a PhD in bioinformatics under the supervision of Prof. John Cryan, Prof. Ted Dinan and Dr. Marcus Claesson. The topic of his thesis was the microbiome-gut-brain axis. Specifically, the focus was to understand what measurable aspects of the microbiome-gut-brain axis are the most informative to study in the context of health and disease. After graduating in 2021, Thomaz continues to work as a post-doc and the lead bioinformatician in Prof. Cryans lab. He is particularly interested in studying the temporal dynamics of the microbiome and understanding the microbiome from an ecosystem perspective.
+
+## Education
+
+**University College Cork** | Ireland
+
+PhD in Bioinformatics | January 2018 - March 2021
+
+**Utrecht University** | Netherlands
+
+MSs in Molecular and Cellular Life Sciences
+
+B.S. in Biology 
+
+## Experience
+
+**APC Microbiome Ireland** | Postdoctoral Researcher | Lead Bioinformatician | March 2021 - Present

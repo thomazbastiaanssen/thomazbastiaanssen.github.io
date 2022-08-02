@@ -1,17 +1,17 @@
 ---
-title: "Thomaz F. S. Bastiaanssen"
+title: "Thomaz F. S. Bastiaanssen, PhD"
 image: "thomaz.jpg"
 links:
-  - label: Twitter
-    url: "https://twitter.com/Thomazsan"
-  - label: GitHub
-    url: "https://github.com/thomazbastiaanssen"
-  - label: Email
-    url: "mailto:thomaz.bastiaanssen@ucc.ie"
   - label: Publications
     url: "https://scholar.google.com/citations?user=QktcRXUAAAAJ&hl=en"
   - label: CV
     url: "https://thomazbastiaanssen.github.io/cv/tfs_cv.pdf"
+  - label: Twitter
+    url: "https://twitter.com/Thomazsan"
+  - label: Email
+    url: "mailto:thomaz.bastiaanssen@ucc.ie"
+  - label: GitHub
+    url: "https://github.com/thomazbastiaanssen"
   - label: LinkedIn
     url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
     
@@ -43,11 +43,11 @@ PhD | 2018 - 2021
 
 MSc | 2014 - 2017
 
-* Research Trajectory: Molecular and Cellular Life Sciences - Bioinformatics
+* Trajectory: Molecular and Cellular Life Sciences - Bioinformatics
 
 BSc | 2010 - 2013 
 
-* Majored in Biology with a Minor in Art History
+* Major in Biology with a Minor in Art History
 
 ## Experience
 

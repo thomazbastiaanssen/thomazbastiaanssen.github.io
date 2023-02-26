@@ -12,6 +12,8 @@ links:
     url: "mailto:thomaz.bastiaanssen@ucc.ie"
   - label: GitHub
     url: "https://github.com/thomazbastiaanssen"
+  - label: Recipes
+    url: "https://thomazbastiaanssen.github.io/cooking/recipe.pdf"
   # - label: LinkedIn
   #   url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
     

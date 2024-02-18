@@ -12,11 +12,21 @@ links:
     url: "mailto:thomaz.bastiaanssen@ucc.ie"
   - label: GitHub
     url: "https://github.com/thomazbastiaanssen"
-  - label: Recipes
+  - label: Notes
     url: "https://thomazbastiaanssen.github.io/cooking/recipe.pdf"
   # - label: LinkedIn
   #   url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
-    
+navbar:
+  title: My Website
+  left:
+  - text: Home
+    href: "index.html"
+  - text: Notes
+    menu:
+    - text: Module 1
+      href: "pages/CoDA_MB.html"
+    - text: Module 2
+      href: "cooking/recipe.pdf"
 output:
   postcards::trestles
 ---

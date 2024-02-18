@@ -35,10 +35,15 @@ Essentially what this says is that in order to get the CLR-transformed values of
 **Furthermore, there are a few points to keep in mind when interpreting CLR-transformed values.**
 
 -   First, the CLR-transformation is especially useful in the scenario where most features do not change, so that the geometric mean remains reasonably stable between your samples. If the geometric mean is very different between your samples, you're dividing by very different values between your samples.
--   Second, especially for microbiome sequencing experiments, we are usually dealing with how many reads we found for any given organism. Typically, we cannot relate this back to the absolute or even the relative abundances of those organisms, as all microbes have their own *microbe-to-reads* conversion rate (again see the main text). Even so, the ratios between the reads are still highly informative.
+-   Second, especially for microbiome sequencing experiments, we are usually dealing with how many reads we found for any given organism. Typically, we cannot relate this back to the absolute or even the relative abundances of those organisms, as all microbes have their own *microbe-to-reads* conversion rate. Even so, the ratios between the reads are still highly informative.
 
 The CLR-transformation is not a *perfect solution* for compositionality - in fact the idea of a solution to a type of data seems a little odd - but in practice the CLR-transformation tends to be a handy tool on the belt of a bioinformatician.
 Understanding what exactly it does will greatly improve its utility and reduce the chance of misinterpreting an analysis.
+
+### Further reading:
+
+* [Understanding sequencing data as compositions: an outlook and review](https://doi.org/10.1093/bioinformatics/bty175)
+* [Bugs as features (part 1): concepts and foundations for the compositional data analysis of the microbiome–gut–brain axis](https://doi.org/10.1038/s44220-023-00148-3)
 
 ------------------------------------------------------------------------
 
@@ -81,8 +86,8 @@ $$
 We can center microbiome data per batch to more reasonably compare between batches, as we remove the batch-specific multiplicative bias. 
 Additionally, centering may have favourable properties for summed log-ratio analysis, where we sum together components to make amalgamations. 
 
-Aitchison distance is invariant to centering by feature geometric means:
-(Meaning beta diversity will not change, nor will differential abundance)
+**Aitchison distance is invariant to centering by feature geometric means:**
+
 
 ```{r Aitchison distance is invariant to centering}
 set.seed(1)
@@ -94,7 +99,7 @@ counts.clr = t(apply(
   counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
   ))
 
-#alternatively, first center each feature:
+#Alternatively, first center each feature:
 cent_counts = apply(
   #Here I divide by the geometric mean in log-space, to avoid rounding issues with small numbers.
   counts, 2, FUN = function(x) {exp( log(x) - mean(log(x)))} 
@@ -113,11 +118,13 @@ all.equal(
 
 
 ```
+(Meaning beta diversity will not change, nor will differential abundance)
 
 ### Questions
 
 * What does it mean to sum together centered components?
 
-Further reading:
-[Consistent and correctable bias in metagenomic sequencing experiments](https://doi.org/10.7554/eLife.46923)
+### Further reading:
+
+* [Consistent and correctable bias in metagenomic sequencing experiments](https://doi.org/10.7554/eLife.46923)
 

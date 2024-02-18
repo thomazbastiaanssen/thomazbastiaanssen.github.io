@@ -417,8 +417,8 @@ between your samples.</li>
 usually dealing with how many reads we found for any given organism.
 Typically, we cannot relate this back to the absolute or even the
 relative abundances of those organisms, as all microbes have their own
-<em>microbe-to-reads</em> conversion rate (again see the main text).
-Even so, the ratios between the reads are still highly informative.</li>
+<em>microbe-to-reads</em> conversion rate. Even so, the ratios between
+the reads are still highly informative.</li>
 </ul>
 <p>The CLR-transformation is not a <em>perfect solution</em> for
 compositionality - in fact the idea of a solution to a type of data
@@ -426,7 +426,17 @@ seems a little odd - but in practice the CLR-transformation tends to be
 a handy tool on the belt of a bioinformatician. Understanding what
 exactly it does will greatly improve its utility and reduce the chance
 of misinterpreting an analysis.</p>
+<div id="further-reading" class="section level3">
+<h3>Further reading:</h3>
+<ul>
+<li><a href="https://doi.org/10.1093/bioinformatics/bty175">Understanding
+sequencing data as compositions: an outlook and review</a></li>
+<li><a href="https://doi.org/10.1038/s44220-023-00148-3">Bugs as
+features (part 1): concepts and foundations for the compositional data
+analysis of the microbiome–gut–brain axis</a></li>
+</ul>
 <hr />
+</div>
 </div>
 <div id="dealing-with-sequencing-biases-and-batches" class="section level1">
 <h1>Dealing with sequencing biases and batches</h1>
@@ -484,9 +494,8 @@ compare between batches, as we remove the batch-specific multiplicative
 bias. Additionally, centering may have favourable properties for summed
 log-ratio analysis, where we sum together components to make
 amalgamations.</p>
-<p>Aitchison distance is invariant to centering by feature geometric
-means: (Meaning beta diversity will not change, nor will differential
-abundance)</p>
+<p><strong>Aitchison distance is invariant to centering by feature
+geometric means:</strong></p>
 <pre class="r"><code>set.seed(1)
 #Simulate simple microbiome data with 10 features, 20 samples and 10.000 reads per sample. 
 counts &lt;- t(rmultinom(n = 20, 10000, prob = runif(10, min = 0.01, max = 1)))
@@ -496,7 +505,7 @@ counts.clr = t(apply(
   counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
   ))
 
-#alternatively, first center each feature:
+#Alternatively, first center each feature:
 cent_counts = apply(
   #Here I divide by the geometric mean in log-space, to avoid rounding issues with small numbers.
   counts, 2, FUN = function(x) {exp( log(x) - mean(log(x)))} 
@@ -513,13 +522,20 @@ all.equal(
   c(dist(cent_counts.clr, method = &quot;euclidean&quot;))
   )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
+<p>(Meaning beta diversity will not change, nor will differential
+abundance)</p>
 <div id="questions" class="section level3">
 <h3>Questions</h3>
 <ul>
 <li>What does it mean to sum together centered components?</li>
 </ul>
-<p>Further reading: <a href="https://doi.org/10.7554/eLife.46923">Consistent and correctable
-bias in metagenomic sequencing experiments</a></p>
+</div>
+<div id="further-reading-1" class="section level3">
+<h3>Further reading:</h3>
+<ul>
+<li><a href="https://doi.org/10.7554/eLife.46923">Consistent and
+correctable bias in metagenomic sequencing experiments</a></li>
+</ul>
 </div>
 </div>
 

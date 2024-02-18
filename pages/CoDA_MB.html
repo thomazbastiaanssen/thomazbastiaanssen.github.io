@@ -357,9 +357,6 @@ display: none;
 </div>
 
 
-<div id="clr" class="section level2">
-<h2>CLR</h2>
-</div>
 <div id="interpreting-centered-log-ratio-transformed-data" class="section level1">
 <h1>Interpreting Centered Log-Ratio Transformed Data</h1>
 <p>The centered log-ratio (CLR) transformation may be the most common
@@ -385,7 +382,8 @@ about the center of your data.</p>
 CLR-transformed values of a vector, you take every element of that
 vector, divide it by the geometric mean of the entire vector and then
 take the natural logarithm of the result and you’re done.</p>
-<p>We can deduce a few things about this transformation.</p>
+<p><strong>We can deduce a few things about this
+transformation.</strong></p>
 <ul>
 <li>First, since we’re taking a natural logarithm, <span class="math inline">\(\frac{x_{n}}{G({\bf x})}\)</span> can never be
 zero as the logarithm of zero is undefined. This means that we need to
@@ -407,8 +405,8 @@ of 1 on a CLR-transformed scale corresponds to multiplying with
 Conversely, a decrease of 1 on a CLR-transformed scale corresponds to
 dividing by <em>e</em>.</li>
 </ul>
-<p>Furthermore there are a few points to keep in mind when interpreting
-CLR-transformed values.</p>
+<p><strong>Furthermore, there are a few points to keep in mind when
+interpreting CLR-transformed values.</strong></p>
 <ul>
 <li>First, the CLR-transformation is especially useful in the scenario
 where most features do not change, so that the geometric mean remains
@@ -427,8 +425,73 @@ compositionality - in fact the idea of a solution to a type of data
 seems a little odd - but in practice the CLR-transformation tends to be
 a handy tool on the belt of a bioinformatician. Understanding what
 exactly it does will greatly improve its utility and reduce the chance
-of misinterpreting an analyisis.</p>
+of misinterpreting an analysis.</p>
 <hr />
+</div>
+<div id="dealing-with-sequencing-biases-and-batches" class="section level1">
+<h1>Dealing with sequencing biases and batches</h1>
+<p>Read count data from metagenomic sequencing experiments are affected
+by a multiplicative, sequence-specific bias. This is because sequences
+from different taxa can be subjected to vastly different conditions
+before sequencing and may also differ in how effectively they can be
+bound &amp; sequenced by modern platforms.</p>
+<p>Often, we have no way of estimating the per-read bias. However, we do
+know it is multiplicative (and not additive). Therefore, we can try to
+remove the bias by dividing each feature by its geometric mean. This is
+also known as geometric mean centering.</p>
+<p>Let’s imagine a microbiome feature table <span class="math inline">\(X\)</span>, with <span class="math inline">\(i\)</span> <strong>samples as rows</strong> and
+<span class="math inline">\(j\)</span> <strong>features as
+columns</strong>:</p>
+<p><span class="math display">\[
+X_{i,j} =
+\begin{pmatrix}
+  x_{1,1} &amp; x_{1,2} &amp; x_{1,3} &amp; \cdots &amp; x_{1,j} \\
+  x_{2,1} &amp; x_{2,2} &amp; x_{2,3} &amp; \cdots &amp; x_{2,j} \\
+  x_{3,1} &amp; x_{3,2} &amp; x_{3,3} &amp; \cdots &amp; x_{3,j} \\
+  \vdots  &amp; \vdots  &amp;\vdots  &amp; \ddots &amp; \vdots  \\
+  x_{i,1} &amp; x_{i,2} &amp; x_{i,3} &amp; \cdots &amp; x_{i,j}
+\end{pmatrix}
+\]</span></p>
+<p>Because we are dealing with compositional data, the values themselves
+are not informative, only the ratios between values (components) within
+a composition.</p>
+<p>We can divide each element of <span class="math inline">\(\bf{x^{*}_{j}}\)</span> by its geometric mean
+<span class="math inline">\(G({\bf x^{*}_{j}})\)</span> to geometric
+mean center each feature. This is different from the CLR-transformation,
+as we center over the features here instead of centering over the
+samples. In other words:</p>
+<p><span class="math display">\[
+centered(X_{i,j}) =
+\begin{pmatrix}
+  \frac{x_{1,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{1,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{1,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{1,j}}{G({\bf x^{*}_{j}})} \\
+  \frac{x_{2,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{2,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{2,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{2,j}}{G({\bf x^{*}_{j}})} \\
+  \frac{x_{3,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{3,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{3,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{3,j}}{G({\bf x^{*}_{j}})} \\
+  \vdots                             &amp;
+\vdots                             &amp;
+\vdots                             &amp; \ddots &amp; \vdots  \\
+  \frac{x_{i,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{i,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{i,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{i,j}}{G({\bf x^{*}_{j}})}
+\end{pmatrix}
+\]</span> We can center microbiome data per batch to more reasonably
+compare between batches, as we remove the batch-specific multiplicative
+bias. Additionally, centering may have favourable properties for summed
+log-ratio analysis, where we sum together components to make
+amalgamations.</p>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
+<ul>
+<li>What does it mean to sum together centered components?</li>
+</ul>
+<p>Further reading: <a href="https://doi.org/10.7554/eLife.46923">Consistent and correctable
+bias in metagenomic sequencing experiments</a></p>
+</div>
 </div>
 
 

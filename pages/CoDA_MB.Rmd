@@ -1,0 +1,47 @@
+---
+title: "Compositional Microbiome Data"
+author: "Thomaz Bastiaanssen"
+date: "2024-02-18"
+output: html_document
+---
+
+
+## CLR
+
+# Interpreting Centered Log-Ratio Transformed Data
+
+The centered log-ratio (CLR) transformation may be the most common approach to deal with compositional data, such as microbiome sequencing data.
+To help form intuition on what the CLR transformation does and how to interpret it, let's start by taking a look at the mathematical notation.
+
+Let's say we have a microbiome sample which we will treat as a vector called $\bf{x}$ with size $D$.
+We'll refer to the taxa - or more generally the elements - of this vector $\bf{x}$ as ${x}_1$ - ${x}_D$.
+Then, CLR-transforming that vector $\bf{x}$ would look like this:
+
+$$clr({\mathbf{x}}) = \left \lbrace \ln \left (\frac{{x}_{1}}{G({\mathbf{x}})} \right), \dots, \ln \left (\frac{{x}_{D}}{G({\mathbf{x}})} \right) \right \rbrace$$
+
+Where ${G({\bf x})}$ is the geometric mean of $\bf{x}$.
+Let's go through it step by step.
+
+You can calculate the geometric mean of a set of *n* numbers by multiplying them together and then taking the *n*^th^ root.
+Just like the 'regular' mean, the geometric mean says something about the center of your data.
+
+Essentially what this says is that in order to get the CLR-transformed values of a vector, you take every element of that vector, divide it by the geometric mean of the entire vector and then take the natural logarithm of the result and you're done.
+
+We can deduce a few things about this transformation.
+
+-   First, since we're taking a natural logarithm, $\frac{x_{n}}{G({\bf x})}$ can never be zero as the logarithm of zero is undefined. This means that we need to either replace or remove every zero in our data before we use this transformation. We expand on strategies for this in the main text.
+-   Second, the possible range of our data has changed. Regular counts can go from 0 to infinity and relative abundance data can go from 0 to 1, but CLR-transformed data can go from negative infinity to positive infinity. The logarithm of a very small number divided by a very large number will be very negative.
+-   Third, if $x_{n}$ is exactly the same as the geometric mean $G({\bf x})$, $\frac{x_{n}}{G({\bf x})}$ will be 1 and thus $clr(x_{n})$ will be 0 as the logarithm of 1 is equal to 0. This gives us some intuition about the size of CLR-transformed values. Going further on this, it means that an increase of 1 on a CLR-transformed scale corresponds to multiplying with *e*, Euler's number, which is approximately equal to 2.718282. Conversely, a decrease of 1 on a CLR-transformed scale corresponds to dividing by *e*.
+
+Furthermore there are a few points to keep in mind when interpreting CLR-transformed values.
+
+-   First, the CLR-transformation is especially useful in the scenario where most features do not change, so that the geometric mean remains reasonably stable between your samples. If the geometric mean is very different between your samples, you're dividing by very different values between your samples.
+-   Second, especially for microbiome sequencing experiments, we are usually dealing with how many reads we found for any given organism. Typically, we cannot relate this back to the absolute or even the relative abundances of those organisms, as all microbes have their own *microbe-to-reads* conversion rate (again see the main text). Even so, the ratios between the reads are still highly informative.
+
+The CLR-transformation is not a *perfect solution* for compositionality - in fact the idea of a solution to a type of data seems a little odd - but in practice the CLR-transformation tends to be a handy tool on the belt of a bioinformatician.
+Understanding what exactly it does will greatly improve its utility and reduce the chance of misinterpreting an analyisis.
+
+------------------------------------------------------------------------
+
+
+

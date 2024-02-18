@@ -81,6 +81,39 @@ $$
 We can center microbiome data per batch to more reasonably compare between batches, as we remove the batch-specific multiplicative bias. 
 Additionally, centering may have favourable properties for summed log-ratio analysis, where we sum together components to make amalgamations. 
 
+Aitchison distance is invariant to centering by feature geometric means:
+(Meaning beta diversity will not change, nor will differential abundance)
+
+```{r Aitchison distance is invariant to centering}
+set.seed(1)
+#Simulate simple microbiome data with 10 features, 20 samples and 10.000 reads per sample. 
+counts <- t(rmultinom(n = 20, 10000, prob = runif(10, min = 0.01, max = 1)))
+
+#CLR-transform each sample:
+counts.clr = t(apply(
+  counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#alternatively, first center each feature:
+cent_counts = apply(
+  #Here I divide by the geometric mean in log-space, to avoid rounding issues with small numbers.
+  counts, 2, FUN = function(x) {exp( log(x) - mean(log(x)))} 
+  )
+
+#And then CLR-transform as before:
+cent_counts.clr = t(apply(
+  cent_counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#Aitchison distance is the same:
+all.equal(
+  c(dist(counts.clr,      method = "euclidean")),
+  c(dist(cent_counts.clr, method = "euclidean"))
+  )
+
+
+```
+
 ### Questions
 
 * What does it mean to sum together centered components?

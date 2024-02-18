@@ -484,6 +484,35 @@ compare between batches, as we remove the batch-specific multiplicative
 bias. Additionally, centering may have favourable properties for summed
 log-ratio analysis, where we sum together components to make
 amalgamations.</p>
+<p>Aitchison distance is invariant to centering by feature geometric
+means: (Meaning beta diversity will not change, nor will differential
+abundance)</p>
+<pre class="r"><code>set.seed(1)
+#Simulate simple microbiome data with 10 features, 20 samples and 10.000 reads per sample. 
+counts &lt;- t(rmultinom(n = 20, 10000, prob = runif(10, min = 0.01, max = 1)))
+
+#CLR-transform each sample:
+counts.clr = t(apply(
+  counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#alternatively, first center each feature:
+cent_counts = apply(
+  #Here I divide by the geometric mean in log-space, to avoid rounding issues with small numbers.
+  counts, 2, FUN = function(x) {exp( log(x) - mean(log(x)))} 
+  )
+
+#And then CLR-transform as before:
+cent_counts.clr = t(apply(
+  cent_counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#Aitchison distance is the same:
+all.equal(
+  c(dist(counts.clr,      method = &quot;euclidean&quot;)),
+  c(dist(cent_counts.clr, method = &quot;euclidean&quot;))
+  )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 <div id="questions" class="section level3">
 <h3>Questions</h3>
 <ul>

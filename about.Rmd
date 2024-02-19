@@ -1,5 +1,7 @@
 ---
 title: "Thomaz F. S. Bastiaanssen, PhD"
+params:
+  output_dir: "_site"
 ---
 
 ```{r setup, echo=FALSE}

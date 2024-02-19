@@ -2,6 +2,8 @@
 title: "Compositional Microbiome Data"
 author: "Thomaz Bastiaanssen"
 date: "2024-02-18"
+params:
+  output_dir: "_notes"
 output: 
   html_document
 ---

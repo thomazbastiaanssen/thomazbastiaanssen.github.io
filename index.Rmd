@@ -20,10 +20,6 @@ output:
   postcards::trestles
 ---
 
-```{r setup, echo=FALSE}
-knitr::opts_chunk$set(self.contained = FALSE)
-```
-
 ## About
 
 I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health. 

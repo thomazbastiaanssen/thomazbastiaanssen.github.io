@@ -6,6 +6,10 @@ output:
   html_document
 ---
 
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(self.contained = FALSE)
+knitr::opts_chunk$set(cache = FALSE)
+```
 
 # Interpreting Centered Log-Ratio Transformed Data
 

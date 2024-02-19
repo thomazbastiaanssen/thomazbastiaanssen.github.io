@@ -20,6 +20,9 @@ output:
   postcards::trestles
 ---
 
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(self.contained = FALSE)
+```
 
 ## About
 

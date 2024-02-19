@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Thomaz Bastiaanssen" />
+
+<meta name="date" content="2024-02-18" />
+
+<title>Compositional Microbiome Data</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="CoDA_MB.html">Notes</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Compositional Microbiome Data</h1>
+<h4 class="author">Thomaz Bastiaanssen</h4>
+<h4 class="date">2024-02-18</h4>
+
+</div>
+
+
+<div id="interpreting-centered-log-ratio-transformed-data"
+class="section level1">
+<h1>Interpreting Centered Log-Ratio Transformed Data</h1>
+<p>The centered log-ratio (CLR) transformation may be the most common
+approach to deal with compositional data, such as microbiome sequencing
+data. To help form intuition on what the CLR transformation does and how
+to interpret it, let’s start by taking a look at the mathematical
+notation.</p>
+<p>Let’s say we have a microbiome sample which we will treat as a vector
+called <span class="math inline">\(\bf{x}\)</span> with size <span
+class="math inline">\(D\)</span>. We’ll refer to the taxa - or more
+generally the elements - of this vector <span
+class="math inline">\(\bf{x}\)</span> as <span
+class="math inline">\({x}_1\)</span> - <span
+class="math inline">\({x}_D\)</span>. Then, CLR-transforming that vector
+<span class="math inline">\(\bf{x}\)</span> would look like this:</p>
+<p><span class="math display">\[clr({\mathbf{x}}) = \left \lbrace \ln
+\left (\frac{ {x}_{1}}{G({\mathbf{x}})} \right), \dots, \ln \left
+(\frac{ {x}_{D}}{G({\mathbf{x}})} \right) \right \rbrace\]</span></p>
+<p>Where <span class="math inline">\({G({\bf x})}\)</span> is the
+geometric mean of <span class="math inline">\(\bf{x}\)</span>. Let’s go
+through it step by step.</p>
+<p>You can calculate the geometric mean of a set of <em>n</em> numbers
+by multiplying them together and then taking the <em>n</em><sup>th</sup>
+root. Just like the ‘regular’ mean, the geometric mean says something
+about the center of your data.</p>
+<p>Essentially what this says is that in order to get the
+CLR-transformed values of a vector, you take every element of that
+vector, divide it by the geometric mean of the entire vector and then
+take the natural logarithm of the result and you’re done.</p>
+<p><strong>We can deduce a few things about this
+transformation.</strong></p>
+<ul>
+<li>First, since we’re taking a natural logarithm, <span
+class="math inline">\(\frac{x_{n}}{G({\bf x})}\)</span> can never be
+zero as the logarithm of zero is undefined. This means that we need to
+either replace or remove every zero in our data before we use this
+transformation. We expand on strategies for this in the main text.</li>
+<li>Second, the possible range of our data has changed. Regular counts
+can go from 0 to infinity and relative abundance data can go from 0 to
+1, but CLR-transformed data can go from negative infinity to positive
+infinity. The logarithm of a very small number divided by a very large
+number will be very negative.</li>
+<li>Third, if <span class="math inline">\(x_{n}\)</span> is exactly the
+same as the geometric mean <span class="math inline">\(G({\bf
+x})\)</span>, <span class="math inline">\(\frac{x_{n}}{G({\bf
+x})}\)</span> will be 1 and thus <span
+class="math inline">\(clr(x_{n})\)</span> will be 0 as the logarithm of
+1 is equal to 0. This gives us some intuition about the size of
+CLR-transformed values. Going further on this, it means that an increase
+of 1 on a CLR-transformed scale corresponds to multiplying with
+<em>e</em>, Euler’s number, which is approximately equal to 2.718282.
+Conversely, a decrease of 1 on a CLR-transformed scale corresponds to
+dividing by <em>e</em>.</li>
+</ul>
+<p><strong>Furthermore, there are a few points to keep in mind when
+interpreting CLR-transformed values.</strong></p>
+<ul>
+<li>First, the CLR-transformation is especially useful in the scenario
+where most features do not change, so that the geometric mean remains
+reasonably stable between your samples. If the geometric mean is very
+different between your samples, you’re dividing by very different values
+between your samples.</li>
+<li>Second, especially for microbiome sequencing experiments, we are
+usually dealing with how many reads we found for any given organism.
+Typically, we cannot relate this back to the absolute or even the
+relative abundances of those organisms, as all microbes have their own
+<em>microbe-to-reads</em> conversion rate. Even so, the ratios between
+the reads are still highly informative.</li>
+</ul>
+<p>The CLR-transformation is not a <em>perfect solution</em> for
+compositionality - in fact the idea of a solution to a type of data
+seems a little odd - but in practice the CLR-transformation tends to be
+a handy tool on the belt of a bioinformatician. Understanding what
+exactly it does will greatly improve its utility and reduce the chance
+of misinterpreting an analysis.</p>
+<div id="further-reading" class="section level3">
+<h3>Further reading:</h3>
+<ul>
+<li><a
+href="https://doi.org/10.1093/bioinformatics/bty175">Understanding
+sequencing data as compositions: an outlook and review</a></li>
+<li><a href="https://doi.org/10.1038/s44220-023-00148-3">Bugs as
+features (part 1): concepts and foundations for the compositional data
+analysis of the microbiome–gut–brain axis</a></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="dealing-with-sequencing-biases-and-batches"
+class="section level1">
+<h1>Dealing with sequencing biases and batches</h1>
+<p>Read count data from metagenomic sequencing experiments are affected
+by a multiplicative, sequence-specific bias. This is because sequences
+from different taxa can be subjected to vastly different conditions
+before sequencing and may also differ in how effectively they can be
+bound &amp; sequenced by modern platforms.</p>
+<p>Often, we have no way of estimating the per-read bias. However, we do
+know it is multiplicative (and not additive). Therefore, we can try to
+remove the bias by dividing each feature by its geometric mean. This is
+also known as geometric mean centering.</p>
+<p>Let’s imagine a microbiome feature table <span
+class="math inline">\(X\)</span>, with <span
+class="math inline">\(i\)</span> <strong>samples as rows</strong> and
+<span class="math inline">\(j\)</span> <strong>features as
+columns</strong>:</p>
+<p><span class="math display">\[
+X_{i,j} =
+\begin{pmatrix}
+  x_{1,1} &amp; x_{1,2} &amp; x_{1,3} &amp; \cdots &amp; x_{1,j} \\
+  x_{2,1} &amp; x_{2,2} &amp; x_{2,3} &amp; \cdots &amp; x_{2,j} \\
+  x_{3,1} &amp; x_{3,2} &amp; x_{3,3} &amp; \cdots &amp; x_{3,j} \\
+  \vdots  &amp; \vdots  &amp;\vdots  &amp; \ddots &amp; \vdots  \\
+  x_{i,1} &amp; x_{i,2} &amp; x_{i,3} &amp; \cdots &amp; x_{i,j}
+\end{pmatrix}
+\]</span></p>
+<p>Because we are dealing with compositional data, the values themselves
+are not informative, only the ratios between values (components) within
+a composition.</p>
+<p>We can divide each element of <span
+class="math inline">\(\bf{x^{*}_{j}}\)</span> by its geometric mean
+<span class="math inline">\(G({\bf x^{*}_{j}})\)</span> to geometric
+mean center each feature. This is different from the CLR-transformation,
+as we center over the features here instead of centering over the
+samples. In other words:</p>
+<p><span class="math display">\[
+centered(X_{i,j}) =
+\begin{pmatrix}
+  \frac{x_{1,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{1,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{1,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{1,j}}{G({\bf x^{*}_{j}})} \\
+  \frac{x_{2,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{2,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{2,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{2,j}}{G({\bf x^{*}_{j}})} \\
+  \frac{x_{3,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{3,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{3,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{3,j}}{G({\bf x^{*}_{j}})} \\
+  \vdots                             &amp;
+\vdots                             &amp;
+\vdots                             &amp; \ddots &amp; \vdots  \\
+  \frac{x_{i,1}}{G({\bf x^{*}_{1}})} &amp; \frac{x_{i,2}}{G({\bf
+x^{*}_{2}})} &amp; \frac{x_{i,3}}{G({\bf x^{*}_{3}})} &amp; \cdots &amp;
+\frac{x_{i,j}}{G({\bf x^{*}_{j}})}
+\end{pmatrix}
+\]</span> We can center microbiome data per batch to more reasonably
+compare between batches, as we remove the batch-specific multiplicative
+bias. Additionally, centering may have favourable properties for summed
+log-ratio analysis, where we sum together components to make
+amalgamations.</p>
+<p><strong>Aitchison distance is invariant to centering by feature
+geometric means:</strong></p>
+<pre class="r"><code>set.seed(1)
+#Simulate simple microbiome data with 10 features, 20 samples and 10.000 reads per sample. 
+counts &lt;- t(rmultinom(n = 20, 10000, prob = runif(10, min = 0.01, max = 1)))
+
+#CLR-transform each sample:
+counts.clr = t(apply(
+  counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#Alternatively, first center each feature:
+cent_counts = apply(
+  #Here I divide by the geometric mean in log-space, to avoid rounding issues with small numbers.
+  counts, 2, FUN = function(x) {exp( log(x) - mean(log(x)))} 
+  )
+
+#And then CLR-transform as before:
+cent_counts.clr = t(apply(
+  cent_counts, 1, FUN = function(x) { log(x) - mean(log(x)) }
+  ))
+
+#Aitchison distance is the same:
+all.equal(
+  c(dist(counts.clr,      method = &quot;euclidean&quot;)),
+  c(dist(cent_counts.clr, method = &quot;euclidean&quot;))
+  )</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>(Meaning beta diversity will not change, nor will differential
+abundance)</p>
+<div id="questions" class="section level3">
+<h3>Questions</h3>
+<ul>
+<li>What does it mean to sum together centered components?</li>
+</ul>
+</div>
+<div id="further-reading-1" class="section level3">
+<h3>Further reading:</h3>
+<ul>
+<li><a href="https://doi.org/10.7554/eLife.46923">Consistent and
+correctable bias in metagenomic sequencing experiments</a></li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

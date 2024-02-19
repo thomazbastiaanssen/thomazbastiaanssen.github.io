@@ -1,9 +1,5 @@
 ---
 title: "Thomaz F. S. Bastiaanssen, PhD"
-navbar:
-  right:
-    - text: "Home"
-      href: "index.html"
 image: "thomaz.jpg"
 links:
   - label: Publications
@@ -18,18 +14,13 @@ links:
     url: "https://github.com/thomazbastiaanssen"
   - label: Recipes
     url: "https://thomazbastiaanssen.github.io/cooking/recipe.pdf"
-  - label: Notes
-    url: "https://thomazbastiaanssen.github.io/pages/notes.html"
-
   # - label: LinkedIn
   #   url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
 output:
   postcards::trestles
 ---
-<style>
-body {text-align: justify}
-</style>
- 
+
+
 ## About
 
 I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health. 

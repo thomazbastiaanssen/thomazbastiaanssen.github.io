@@ -1,0 +1,13 @@
+name: "thomazbastiaanssen.github.io"
+title: "Thomaz F. S. Bastiaanssen, PhD"
+output_dir: "_site"
+theme: theme.css
+navbar:
+  right:
+    - text: "Home"
+      href: "index.html"
+    - text: "Notes"
+      href: "CoDA_MB.html"
+repository_url: "https://thomazbastiaanssen.github.io/"
+output: 
+  distill::distill_article

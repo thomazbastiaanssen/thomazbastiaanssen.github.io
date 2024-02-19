@@ -14,8 +14,8 @@ links:
     url: "https://github.com/thomazbastiaanssen"
   - label: Recipes
     url: "https://thomazbastiaanssen.github.io/cooking/recipe.pdf"
-  # - label: LinkedIn
-  #   url: "https://linkedin.com/in/thomaz-bastiaanssen-753242b0/"
+#  - label: Notes
+#    url: "https://thomazbastiaanssen.github.io/about.html"
 output:
   postcards::trestles
 ---

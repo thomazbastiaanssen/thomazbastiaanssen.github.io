@@ -1,6 +1,6 @@
 name: "thomazbastiaanssen.github.io"
 title: "Thomaz F. S. Bastiaanssen, PhD"
-output_dir: "_site"
+output_dir: "."
 theme: theme.css
 navbar:
   right:

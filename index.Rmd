@@ -31,9 +31,9 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE)
 
 ```
-
+**Summary**<small>(click to expand)</small>
 <details>
-  <summary>**Summary**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
+  <summary>**Introduction**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
 
 The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. 
 

@@ -20,6 +20,12 @@ output:
   postcards::trestles
 site: distill::distill_website
 ---
+<style>
+.main-container {
+  max-width: unset;
+}
+</style>
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -51,7 +57,7 @@ BSc | 2010 - 2013<br>
 
 
 <details>
-  <summary>**Experience**<br>**Amsterdam UMC** | Amsterdam, the Netherlands<br>
+  <summary>**Experience**<br>**Amsterdam UMC** | Netherlands<br>
 Postdoctoral Researcher | April 2024 - Present<br></summary>
 <ul><li>Microbiome Bioinformatician</li></ul>
 

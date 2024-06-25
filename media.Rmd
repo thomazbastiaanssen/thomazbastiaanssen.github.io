@@ -1,7 +1,5 @@
 ---
 title: "Media appearances"
-author: "Thomaz Bastiaanssen"
-date: "2024-02-18"
 params:
   output_dir: "_media"
 output: 
@@ -12,6 +10,7 @@ output:
 
 * [PRV1 (Slovenian public radio), 2021](https://prvi.rtvslo.si/podkast/mozgani-na-dlani/173250662/174773515)
 * [The Beyond Addiction Show, 2021](https://podcasts.apple.com/us/podcast/the-brain-body-connection-with-thomas-bastiansen/id1443006588?i=1000541308770)
+* [ISAPP, 2024](https://isappscience.org/episode-34-virome-in-gut-brain-communication-and-stress/)
 
 ### Articles
 

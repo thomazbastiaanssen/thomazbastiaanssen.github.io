@@ -1,5 +1,7 @@
 ---
 title: "Thomaz F. S. Bastiaanssen, PhD"
+name: "thomazbastiaanssen.github.io"
+#author: "Thomaz Bastiaanssen"
 image: "thomaz.jpg"
 links:
   - label: Publications
@@ -14,43 +16,49 @@ links:
     url: "https://github.com/thomazbastiaanssen"
   - label: Recipes
     url: "https://thomazbastiaanssen.github.io/cooking/recipe.pdf"
-#  - label: Notes
-#    url: "https://thomazbastiaanssen.github.io/about.html"
 output:
   postcards::trestles
+site: distill::distill_website
 ---
 
-## About
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 
-I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health. 
+```
+
+<details>
+  <summary>**Summary**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
 
 The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. 
 
 As a bioinformatician, I value clear and easily interpretable analysis of complex data in order to promote interdisciplinary collaboration.
-I'm currently working as a post-doc and the lead bioinformatician in Prof. Cryans lab. 
+After working as the lead bioinformatician in Prof. Cryans lab in Cork, Ireland, I have recently transitioned to a new postition in Amsterdam UMC with Prof. Brenda Penninx.  
+</details>
 
-## Education
 
-**University College Cork** | Cork, Ireland
-
-PhD | 2018 - 2021
+<details>
+  <summary>**Education**<br>**University College Cork** | Cork, Ireland<br>
+PhD | 2018 - 2021</summary>
 
 * Supervision of Prof. John F. Cryan, Prof. Timothy G. Dinan and Dr. Marcus J. Claesson
 
-**Utrecht University** | Utrecht, Netherlands
+**Utrecht University** | Utrecht, Netherlands<br>
+MSc | 2014 - 2017<br>
+<ul><li>Trajectory: Molecular and Cellular Life Sciences - Bioinformatics</li></ul><nobr>
 
-MSc | 2014 - 2017
+BSc | 2010 - 2013<br>
+<ul><li>Major in Biology with a Minor in Art History</li></ul>
+</details> 
 
-* Trajectory: Molecular and Cellular Life Sciences - Bioinformatics
 
-BSc | 2010 - 2013 
+<details>
+  <summary>**Experience**<br>**Amsterdam UMC** | Amsterdam, the Netherlands<br>
+Postdoctoral Researcher | April 2024 - Present<br></summary>
+<ul><li>Microbiome Bioinformatician</li></ul>
 
-* Major in Biology with a Minor in Art History
+**APC Microbiome Ireland** | Cork, Ireland<br>
+Postdoctoral Researcher | March 2021 - March 2024<br>
+<ul><li>Lead Bioinformatician</li></ul>
+</details>
 
-## Experience
 
-**APC Microbiome Ireland** | Cork, Ireland
-
-Postdoctoral Researcher | March 2021 - Present
-
-* Lead Bioinformatician

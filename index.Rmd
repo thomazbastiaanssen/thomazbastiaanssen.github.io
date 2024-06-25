@@ -11,7 +11,7 @@ links:
   - label: Twitter
     url: "https://twitter.com/Thomazsan"
   - label: Email
-    url: "mailto:thomaz.bastiaanssen@ucc.ie"
+    url: "mailto:t.f.s.bastiaanssen@amsterdamumc.nl"
   - label: GitHub
     url: "https://github.com/thomazbastiaanssen"
   - label: Recipes
@@ -31,7 +31,7 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE)
 
 ```
-**Summary**<small>(click to expand)</small>
+**Summary**<small> (click to expand)</small>
 <details>
   <summary>**Introduction**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
 

@@ -35,7 +35,6 @@ As a bioinformatician, I value clear and easily interpretable analysis of comple
 After working as the lead bioinformatician in Prof. Cryans lab in Cork, Ireland, I have recently transitioned to a new postition in Amsterdam UMC with Prof. Brenda Penninx.  
 </details>
 
-
 <details>
   <summary>**Education**<br>**University College Cork** | Cork, Ireland<br>
 PhD | 2018 - 2021</summary>
@@ -44,7 +43,7 @@ PhD | 2018 - 2021</summary>
 
 **Utrecht University** | Utrecht, Netherlands<br>
 MSc | 2014 - 2017<br>
-<ul><li>Trajectory: Molecular and Cellular Life Sciences - Bioinformatics</li></ul><nobr>
+<ul><li>Trajectory: Molecular and Cellular Life Sciences - Bioinformatics</li></ul>
 
 BSc | 2010 - 2013<br>
 <ul><li>Major in Biology with a Minor in Art History</li></ul>

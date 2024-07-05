@@ -11,7 +11,10 @@ output:
 * [PRV1 (Slovenian public radio), 2021](https://prvi.rtvslo.si/podkast/mozgani-na-dlani/173250662/174773515)
 * [The Beyond Addiction Show, 2021](https://podcasts.apple.com/us/podcast/the-brain-body-connection-with-thomas-bastiansen/id1443006588?i=1000541308770)
 * [ISAPP, 2024](https://isappscience.org/episode-34-virome-in-gut-brain-communication-and-stress/)
+* [NPR, 2024](https://www.npr.org/2024/06/24/nx-s1-5013626-e1/scientists-look-at-the-connection-between-gut-health-and-resilience-to-stress)
 
 ### Articles
 
 * [APC GUT REACTION, 2022](https://www.ucc.ie/en/media/research/apcmicrobiome/_GUTREACTION_WINTER2022.pdf)
+* [APC News, 2024](https://www.ucc.ie/en/apc/news/apc-news/apc-scientist-publishes-first-bioinformatics-guidebook-for-clinicians-and-researchers-interested-in-gut-microbiome-and-brain-health.html)
+* [NPR, 2024](https://www.npr.org/sections/shots-health-news/2024/06/24/nx-s1-5018044/gut-microbiome-microbes-mental-health-stress)

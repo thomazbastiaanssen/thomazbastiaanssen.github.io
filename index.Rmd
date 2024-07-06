@@ -23,7 +23,10 @@ site: distill::distill_website
 <style>
 .main-container {
   max-width: unset;
+  vertical-align: top;
+  align-items: top;
 }
+
 </style>
 
 
@@ -31,6 +34,7 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE)
 
 ```
+
 **Summary**<small> (click to expand)</small>
 <details>
   <summary>**Introduction**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
@@ -65,5 +69,3 @@ Postdoctoral Researcher | April 2024 - Present<br></summary>
 Postdoctoral Researcher | March 2021 - March 2024<br>
 <ul><li>Lead Bioinformatician</li></ul>
 </details>
-
-<br><br><br><br><br><br><br><br>

@@ -2,7 +2,7 @@
 title: "Thomaz F. S. Bastiaanssen, PhD"
 name: "thomazbastiaanssen.github.io"
 #author: "Thomaz Bastiaanssen"
-image: "thomaz.jpg"
+image: "figures/thomaz.jpg"
 links:
   - label: Publications
     url: "https://scholar.google.com/citations?user=QktcRXUAAAAJ&hl=en"
@@ -35,14 +35,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
-**Summary**<small> (click to expand)</small>
+**Summary**<small> (click headers to expand)</small>
 <details>
   <summary>**Introduction**<br>I am a bioinformatician interested in the interplay between the gut microbiome and host mood and mental health.</summary>
 
 The focus of my research currently lies in understanding microbiome-gut-brain communication from a theoretical ecology/bioinformatics perspective. In particular, I am interested in understanding the role of stability and volatility of the gut microbiome in anxiety and depression and in integrating different types of ‘omics data in a biologically interpretable manner. 
 
 As a bioinformatician, I value clear and easily interpretable analysis of complex data in order to promote interdisciplinary collaboration.
-After working as the lead bioinformatician in Prof. Cryans lab in Cork, Ireland, I have recently transitioned to a new postition in Amsterdam UMC with Prof. Brenda Penninx.  
+After working as the lead bioinformatician in Prof. Cryans lab in Cork, Ireland, I transitioned to a new position in Amsterdam UMC with Prof. Brenda Penninx in 2024.  
 </details>
 
 <details>
@@ -69,3 +69,8 @@ Postdoctoral Researcher | April 2024 - Present<br></summary>
 Postdoctoral Researcher | March 2021 - March 2024<br>
 <ul><li>Lead Bioinformatician</li></ul>
 </details>
+
+<details>
+  <summary>**QR**<br></summary>
+  <img src="figures/qr.svg" align="center" alt="https://thomazbastiaanssen.github.io/" />
+</details>  

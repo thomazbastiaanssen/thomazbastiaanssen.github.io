@@ -1,0 +1,353 @@
+---
+title: "Friendly linear models"
+params:
+  output_dir: "_notes"
+output: 
+  html_document
+---
+
+## Litany against fear of ANOVA 
+*I must not fear ANOVA.*\
+*Fear is the mind-killer.*\
+*Fear is the little-death that brings total obliteration.*\
+*I will face my fear.*
+
+
+*I will permit it to pass over me and through me.*\
+*And when it has gone past, I will turn the inner eye to see its path.*\
+*Where the ANOVA has gone, there will be nothing. Only least-squares regression* 
+*will remain.*\
+
+```{r setup, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(self.contained = FALSE)
+knitr::opts_chunk$set(cache = FALSE)
+library(ggplot2)
+library(patchwork)
+library(tidyverse)
+library(ggtext)
+
+set.seed(123)
+
+x <- seq_len(20L)
+y <- pmin(pmax(rnorm(20L) + x/5L, 0.25), 4.75)
+
+```
+
+## A note on notation
+Whenever we employ linear modeling techniques, we make the extremely convenient 
+assumption that we can express these models using high school algebra:
+
+\begin{equation}
+\tag{first style}
+f(x) = ax + b
+\end{equation}
+
+If this comes as a surprise to you, it may be because we often use a different 
+notation for linear modeling. This is deeply confusing. The above, hopefully 
+familiar model would be expressed like this: 
+
+\begin{equation}
+\tag{second style}
+y \sim \beta_0 + \beta_1 x
+\end{equation}
+
+Don't be fooled, dear reader, the meaning behind these formulas is identical. 
+For our purposes, $f(x)$ is just another way of saying $y$. The tilde ($\sim$) 
+should be read as *is explained by*, a more nuanced version of *is equal to* 
+($=$). Finally, we have $\beta_0$ and $\beta_1$, which correspond to $b$ and $a$
+in the first formula. Note that the order is swapped between the two formulas.
+The reason for this is convention: With the first notation, we use letters to
+mark variables, usually from highest to lowest power of $x$. So: 
+
+\begin{equation}
+\tag{first style}
+f(x) = ax^3 + bx^2 + cx + d
+\end{equation}
+
+In the second notation, we still use letters, but they're all $\beta$. To tell 
+our $\beta$s apart we label them at their bottom-right, starting with $\beta_0$. 
+Further, we typically go from lowest to highest order. So: 
+
+\begin{equation}
+\tag{second style}
+y \sim \beta_0 + \beta_1x + \beta_2x^2 + \beta_3x^3
+\end{equation}
+
+## Linear models
+Let's start by taking a look at our data. We have 20 observations of $y$, with 
+complementary $x$ values. In this particular case the $x$-values happen to be 
+the integers from 1 to 20. 
+
+```{r raw-points, fig.width=10, echo=FALSE}
+p_raw <- ggplot() +
+  
+  aes(x = x, y = y) + 
+  
+  geom_point(shape = 21, size = 5, stroke = 1, colour = "black", fill = "red") + 
+  scale_y_continuous(
+    name = "y", limits = c(0, 5), 
+    expand = c(0, 0), minor_breaks = NULL
+  ) +
+  scale_x_continuous(
+    breaks = seq_len(20L), minor_breaks = NULL, expand = expansion(add = 0.5)
+  ) + 
+  xlab("x") +
+  theme_bw() +
+  theme(
+    text = element_text(size = 16), 
+    strip.text = element_markdown()
+    )
+
+p_raw
+
+```
+At this point, your instincts are hopefully screaming at you about a positive 
+association between $y$ and $x$. 
+
+```{r lm-prep, echo=FALSE}
+fit <- lm(y ~ x)
+int   <- coef(fit)[1]
+slope <- coef(fit)[2]
+
+y0_hat <- mean(y)
+y0_res <- y - y0_hat
+y1_hat <- predict(fit)
+y1_res <- resid(fit)
+
+H <- factor(c("H~1~", "H~0~"), levels = c("H~1~", "H~0~"))
+df <- data.frame(
+  x, y, 
+  y_hat = c(y1_hat, rep(y0_hat, 20)), 
+  y_res = c(y1_res, y0_res), 
+  Hypothesis = rep(H, each = 20)
+)
+
+ab_df <- data.frame(
+  a = c(slope, 0), 
+  b = c(int, y0_hat), 
+  Hypothesis = H
+)
+
+df_stack <- data.frame(
+  id = as.character(x),
+  x = rep(c(1, 2), each = 20), 
+  y = c(y1_res, y0_res)^2, 
+  x_lines = rep( c(11/8, 13/8), each = 20 ), 
+  y_lines = c( cumsum(y1_res^2), cumsum(y0_res^2) ),
+  Hypothesis = rep(relevel(H, ref = "H~0~"), each = 20)
+)
+
+lines_df <- data.frame(
+  x = c(11/8, 11/8, 13/8, 13/8), 
+  y = c(0, sum(y1_res^2), sum(y0_res^2),  0)
+)
+```
+
+## Two models for two hypotheses
+In order to determine whether a model fits sufficiently well, perhaps even 
+*significantly* well, we have to compare it to some sort of baseline model. By 
+convention, we refer to the baseline model as the *null-model*. By constructing 
+these two models, we have implicitly proposed two hypothetical scenarios, two 
+*hypotheses*, which are conventionally referred to as H~0~ and H~1~ for the 
+null-hypothesis and often more interesting non-null, 'actual' hypothesis. 
+
+In this example, we expect there is an association between $y$ and $x$. In other
+words, we hypothesize that the 'actual' model is some sort of diagonal, straight
+line. In the section above, we discussed that the formula for such a line is:
+
+\begin{equation}
+\tag{$H_1$ model}
+y \sim \beta_0 + \beta_1x
+\end{equation}
+
+Convince yourself that $\beta_1x$, which corresponds to $ax$ using the first 
+notation style, is the only part of this model that can be affected by $x$. 
+Further, recognize that $\beta_1$ (or $a$), controls the slope of the straight 
+line that is defined by this model. Now that we've defined our $H_1$, let's 
+think about the null-model and corresponding implicit null-hypothesis, $H_0$. 
+
+If our $H_1$ is that there is an association between $y$ and $x$, is seems fair 
+that our $H_0$ should be that there is *no* association between $y$ and $x$. In 
+that case, we should expect that our model would perform just fine without any 
+mention of $x$. So, let's simply kick out $\beta_1x$. What's left will be our 
+$H_0$. 
+
+\begin{equation}
+\tag{$H_0$ model}
+y \sim \beta_0
+\end{equation}
+
+Recall that $\beta_0$, also known as $b$ in the first notation style, is a 
+'regular', constant value that controls the $y$-values (height) of our line. 
+
+### Counting model parameters
+Before we go ahead and plot our models, we'll note down the number of parameters
+used for each of our models. $H_1$ uses two (namely $\beta_0$ and $\beta_1$), 
+whereas $H_0$ only uses one (namely, $\beta_0$). We'll need this information 
+later. 
+With all this in mind, let's take a look at the two straight lines our models 
+have drawn through our data. 
+
+```{r, lm-plot, fig.width=10, echo=FALSE}
+p_lm <- ggplot(df) +
+  
+  aes(x = x, y = y, fill = Hypothesis, colour = Hypothesis) + 
+  
+  geom_segment(aes(y = y_hat, yend = y_hat + y_res), linewidth = 1) + 
+  geom_point(shape = 21, size = 5, stroke = 1, colour = "black") + 
+  
+  geom_abline(
+    data = ab_df, aes(slope = a, intercept = b), 
+    colour = c("blue", "darkorange1"), linewidth = 2, linetype = "21"
+  ) +
+  scale_y_continuous(
+    name = "y", limits = c(0, 5), 
+    expand = c(0, 0), minor_breaks = NULL
+  ) +
+  scale_x_continuous(
+    breaks = seq_len(20L), minor_breaks = NULL, expand = expansion(add = 0.5)
+  ) + 
+  scale_fill_manual(values = c("dodgerblue", "gold")) +
+  scale_colour_manual(values = c("mediumblue", "orange")) +
+  facet_wrap(~ Hypothesis) +
+  xlab(NULL) +
+  guides(fill = "none", colour = "none") +
+  theme_bw() +
+  theme(
+    text = element_text(size = 16), strip.text = element_markdown()
+  )
+
+p_lm
+
+```
+
+## Residuals 
+Neither model perfectly explains the data, as not all data points lie precisely 
+on the line. We can measure how much discrepancy there is between the points and
+the the line. We call these discrepancies, or errors, that remain after having 
+fitted the model the *residuals*. Note that some of the residuals are negative, 
+while others are positive. Because positive and negative residuals are equally 
+bad, we'll make them both positive. In the case of least-squares regression we 
+square the values to achieve this, as the name implies. 
+
+```{r residuals, fig.width = 10, echo=FALSE}
+p_res <- ggplot(df) +
+  
+  aes(x = x, y = y_res^2, fill = Hypothesis, colour = Hypothesis) + 
+  
+  geom_bar(
+    stat = "identity", linewidth = 1, show.legend = FALSE
+  ) + 
+  
+  scale_y_continuous(
+    name = "Squared Residual Error", limits = c(0, NA), expand = c(0, 1/8)
+  ) +
+  scale_x_discrete(
+    limits = as.character(seq_len(20L)), expand = expansion(add = 0.5)
+  ) + 
+  scale_fill_manual(values = c("dodgerblue", "gold")) +
+  scale_colour_manual(values = c("mediumblue", "orange")) +
+  facet_wrap(~ Hypothesis) +
+  xlab(NULL) +
+  guides(fill = "none", colour = "none") +
+  theme_bw() +
+  theme(
+    text = element_text(size = 16), strip.text = element_markdown()
+  )
+
+p_res
+
+```
+
+## Sum of Squares
+Next, we want to summarize the total amount of error for both of our models. To 
+achieve this, we'll simply add (or sum) all the squared residual errors together
+for both models. You may have seen the term 'sum-of-squares' before. This is 
+exactly what's going on here. We'll call the two resulting residual sums of 
+squares $RSS_0$ and $RSS_1$, for $H_0$ and $H_1$, respectively. 
+
+```{r stacked, fig.height=3, fig.width=10, echo=FALSE}
+
+p_stack <- ggplot(df_stack) + 
+  aes(x = x, y = y, colour = Hypothesis) + 
+  
+  # geom_polygon(data = lines_df, colour = "gray30", fill = "gray", linewidth = 1) +
+  # 
+  # geom_line( 
+  #   aes(x = x_lines, y = y_lines, group = id), colour = "gray20", alpha = 1/4 
+  #   ) +
+
+  geom_bar(stat = "identity", aes(fill = Hypothesis), linewidth = 1, width = 3/4) +
+  annotate(
+    geom = "RichText", x = c(1, 2), y = c(sum(y1_res^2), sum(y0_res^2)) + 4.5, 
+    size = 5, label.colour = c("mediumblue", "orange"), label.size = 1,
+    label = 
+      paste(c("RSS~1~ =", "RSS~0~ ="), round(c(sum(y1_res^2), sum(y0_res^2)), 3)), 
+           ) +
+  scale_fill_manual(values = c("gold", "dodgerblue")) + 
+  scale_colour_manual(values = c("orange", "mediumblue")) +
+  
+  scale_x_continuous(name = NULL, breaks = c(1, 2), labels = c("H~1~", "H~0~")) + 
+  scale_y_continuous(limits = c(0, 45), expand = c(0, 0)) + 
+  coord_flip() +
+
+  guides(colour = "none", fill = "none") +
+  
+  ylab("Summed Squared Residual Error") +
+  theme_bw() +
+  theme( text = element_text(size = 16), axis.text.y = element_markdown() ) 
+
+p_stack
+
+```
+
+## Calculating the F-statistic 
+Now that we have calculated the residual sums of squares (RSS) for both models, 
+we can start thinking about which model we find more likely. Often, we are 
+interested in estimating a *p-value*, in other words, an estimation of how 
+likely our observed data would be to happen, assuming that the null-hypothesis 
+is true. 
+We can use the F distribution to calculate our p-value. We can think about the 
+F-distribution as a set of shapes defined by a formula, a bit like how the 
+formula $f(x) = ax^2 + bx + c$ defines a set of shapes, namely parabolas. In 
+order to figure out which particular shape and corresponding p-value we have, we
+need to know the value of three parameters, named $F$, $df_1$ and $df_2$. R then 
+provides a wonderfully convenient function, `pf()`, that does most of the heavy 
+lifting for us. 
+What's more, we now have all the necessary information to find the values of 
+these three parameters. The formulas for our three variables are as follows:
+
+\begin{equation}
+\tag{The F-distribution}
+F = \frac{RSS_0 - RSS_1}{RSS_1}\times \frac{df_2}{df_1} ,\\
+df_1 = p_1 - p_0 ,  
+df_2 = n - p_1
+\end{equation}
+
+Where $p_0$ is the number of parameters in $H_0$ (one), $P_1$ is the number of
+parameters in $H_1$ (two) and $n$ is, well, the n-number (20). Let's plug that 
+into our formula: 
+
+\begin{equation}
+\tag{Our F-value}
+F = \frac{35.922 - 16.192}{16.192}\times \frac{2 - 1}{20 - 2} = 21.93
+\end{equation}
+
+So, for our example, $F = 21.93$, $df_1 = 1$ and $df_2 = 18$. let's plug that 
+into `pf()` to get our p-value. 
+
+```{r f-manual}
+pf(21.93, 1, 18, lower.tail = FALSE)
+```
+
+Let's compare our values to those we get when fitting an ANOVA in R the regular 
+way: 
+
+```{r f-anova}
+lm(y ~ x) |> anova()
+```
+Great! Our values correspond to those in `Df`, `F value`, and `Pr(>F)`, up to 
+rounding error. We can also spot $RSS_1$ in the `Sum Sq` column, but $RSS_0$ is 
+not found immediately. However, when we sum together the two values in the 
+`Sum Sq` column, we do indeed get `r round( sum( anova(fit)[, 2L] ), 3L)`. 
+Wonderful! 

@@ -11,6 +11,8 @@ navbar:
       href: "index.html"
     - text: "Notes"
       href: "CoDA_MB.html"
+    - text: "Stats"
+      href: "sum_of_squares.html"
     - text: "Media"
       href: "media.html"
 repository_url: "https://thomazbastiaanssen.github.io/"

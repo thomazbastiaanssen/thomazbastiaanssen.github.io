@@ -1,7 +1,7 @@
 ---
 title: "Thomaz F. S. Bastiaanssen, PhD"
 name: "thomazbastiaanssen.github.io"
-#author: "Thomaz Bastiaanssen"
+# author: "Thomaz Bastiaanssen"
 image: "figures/thomaz.jpg"
 links:
   - label: Publications
@@ -73,4 +73,4 @@ Postdoctoral Researcher | March 2021 - March 2024<br>
 <details>
   <summary>**QR**<br></summary>
   <img src="figures/qr.svg" align="center" alt="https://thomazbastiaanssen.github.io/" />
-</details>  
+</details>

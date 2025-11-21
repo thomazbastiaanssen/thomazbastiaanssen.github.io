@@ -330,7 +330,7 @@ into our formula:
 
 \begin{equation}
 \tag{Our F-value}
-F = \frac{35.922 - 16.192}{16.192}\times \frac{2 - 1}{20 - 2} = 21.93
+F = \frac{35.922 - 16.192}{16.192}\times \frac{20 - 2}{2 - 1} = 21.93
 \end{equation}
 
 So, for our example, $F = 21.93$, $df_1 = 1$ and $df_2 = 18$. let's plug that 
@@ -343,7 +343,7 @@ pf(21.93, 1, 18, lower.tail = FALSE)
 Let's compare our values to those we get when fitting an ANOVA in R the regular 
 way: 
 
-```{r f-anova}
+```{r f-anova, out.width=8}
 lm(y ~ x) |> anova()
 ```
 Great! Our values correspond to those in `Df`, `F value`, and `Pr(>F)`, up to 

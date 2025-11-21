@@ -114,6 +114,10 @@ y0_res <- y - y0_hat
 y1_hat <- predict(fit)
 y1_res <- resid(fit)
 
+RSS0 <- sum(y0_res^2)
+RSS1 <- sum(y1_res^2)
+RSSx <- RSS0 - RSS1
+
 H <- factor(c("H~1~", "H~0~"), levels = c("H~1~", "H~0~"))
 df <- data.frame(
   x, y, 
@@ -279,10 +283,10 @@ p_stack <- ggplot(df_stack) +
 
   geom_bar(stat = "identity", aes(fill = Hypothesis), linewidth = 1, width = 3/4) +
   annotate(
-    geom = "RichText", x = c(1, 2), y = c(sum(y1_res^2), sum(y0_res^2)) + 4.5, 
+    geom = "RichText", x = c(1, 2), y = c(RSS1, RSS1) / 2, 
     size = 5, label.colour = c("mediumblue", "orange"), label.size = 1,
     label = 
-      paste(c("RSS~1~ =", "RSS~0~ ="), round(c(sum(y1_res^2), sum(y0_res^2)), 3)), 
+      paste(c("RSS~1~ =", "RSS~0~ ="), round(c(RSS1, RSS0), 3)), 
            ) +
   scale_fill_manual(values = c("gold", "dodgerblue")) + 
   scale_colour_manual(values = c("orange", "mediumblue")) +
@@ -351,3 +355,56 @@ rounding error. We can also spot $RSS_1$ in the `Sum Sq` column, but $RSS_0$ is
 not found immediately. However, when we sum together the two values in the 
 `Sum Sq` column, we do indeed get `r round( sum( anova(fit)[, 2L] ), 3L)`. 
 Wonderful! 
+
+
+## Revisiting our F-distribution
+Now, let's take a step back and consider the equation for the F-distribution 
+from a different perspective. We'll start out by visualizing the RSS-bit of the 
+equation. 
+
+```{r stacked-revisit, fig.height=3, fig.width=10, echo=FALSE}
+df_stack %>% 
+  bind_rows(
+    data.frame(
+      id = "21", x = 1, y = RSSx, 
+      x_lines = RSS0, y_lines = RSS0, 
+      Hypothesis = factor("aH~1~", levels = c("H~0~", "aH~1~", "H~1~"))
+      )
+  ) %>% 
+  mutate(Hypothesis = factor(Hypothesis, levels = c("H~0~", "aH~1~", "H~1~"))) %>% 
+   ggplot() + 
+  aes(x = x, y = y, colour = Hypothesis) + 
+  
+  # geom_polygon(data = lines_df, colour = "gray30", fill = "gray", linewidth = 1) +
+  # 
+  # geom_line( 
+  #   aes(x = x_lines, y = y_lines, group = id), colour = "gray20", alpha = 1/4 
+  #   ) +
+
+  geom_bar(stat = "identity", aes(fill = Hypothesis, linetype = Hypothesis), linewidth = 1, width = 3/4) +
+  annotate(
+    geom = "RichText", x = c(1, 2, 1), y = c(c(RSS1, RSS1) / 2, RSS1 + RSSx/2), 
+    size = 5, label.colour = c("mediumblue", "orange", "#31a354"), label.size = 1,
+    label = 
+      paste(c("RSS~1~ =", "RSS~0~ =", "RSS~0~ - RSS~1~ = "), round(c(RSS1, RSS0, RSSx), 3)), 
+           ) +
+  scale_fill_manual(values = c("H~0~" = "gold", "H~1~" = "dodgerblue", "aH~1~" = "#addd8e")) + 
+  scale_colour_manual(values = c("H~0~" = "orange", "H~1~" = "mediumblue", "aH~1~" = "#31a354")) +
+  scale_linetype_manual(values = c("H~0~" = "solid", "H~1~" = "solid", "aH~1~" = "dashed")) +
+  
+  scale_x_continuous(name = NULL, breaks = c(1, 2), labels = c("H~1~", "H~0~")) + 
+  scale_y_continuous(limits = c(0, 45), expand = c(0, 0)) + 
+  coord_flip() +
+
+  guides(colour = "none", fill = "none", linetype = "none") +
+  
+  ylab("Summed Squared Residual Error") +
+  theme_bw() +
+  theme( text = element_text(size = 16), axis.text.y = element_markdown() ) 
+
+
+```
+
+In the equation, we break $RSS_0$ into two component chunks, proportional to the
+size of $RSS_1$. Realize that each observation contributes twice in combined 
+bottom bars.   
